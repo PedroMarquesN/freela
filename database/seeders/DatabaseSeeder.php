@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Project;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,6 +18,11 @@ class DatabaseSeeder extends Seeder
              ->count(20)
              ->create();
 
+         User::query()->inRandomOrder()->limit(10)->get()
+             ->each(function (User $user): void {
+                 Project::factory()
+                     ->create(['created_by' => $user->id]);
+             });
 
     }
 }
